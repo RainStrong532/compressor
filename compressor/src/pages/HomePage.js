@@ -6,7 +6,7 @@ class HomePage extends React.Component{
     render(){
         return(
             <div className="mb-4">
-                <div className="jumbotron bg-primary text-white rounded-0">
+                <div className="jumbotron bg-warning text-white rounded-0">
                     <div className="container">
                         <div className="row">
                             <div className="col-md text-center">

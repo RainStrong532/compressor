@@ -48,7 +48,7 @@ class OutputComponent extends React.Component{
         if(this.props.isCompressed){
             button = <button onClick = {() => {
                 this.downloadData(DOMAIN + "blob.jpeg")
-            }} className="btn btn-primary mt-2 d-block" title="Download image" download>Download</button>
+            }} className="btn btn-warning mt-2 d-block" title="Download image" download>Download</button>
         }
         console.log("AAAA:   ", this.props.isCompressed);
         
