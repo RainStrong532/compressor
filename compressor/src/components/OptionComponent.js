@@ -10,7 +10,7 @@ class OptionComponent extends React.Component{
                         <hr/>
                         <fieldset className="form-group">
                             <div className="form-check form-check-inline">
-                                <input type="checkbox" checked={true} name="strict" className="form-check-input" id="inputStrict"
+                                <input type="checkbox" checked={this.props.parent.state.strict} name="strict" className="form-check-input" id="inputStrict"
                                     onChange = {() => {
                                         this.props.parent.setState({strict: !this.props.strict})
                                         this.props.handleFile(undefined, this.props.parent)
@@ -21,7 +21,7 @@ class OptionComponent extends React.Component{
                         </fieldset>
                         <fieldset className="form-group">
                             <div className="form-check form-check-inline">
-                                <input type="checkbox" checked={true} name="checkOrientation" className="form-check-input" id="inputCheckOrientation"
+                                <input type="checkbox" checked={this.props.parent.state.checkOrientation} name="checkOrientation" className="form-check-input" id="inputCheckOrientation"
                                     onChange = {() => {
                                         this.props.parent.setState({checkOrientation: !this.props.checkOrientation})
                                         this.props.handleFile(undefined, this.props.parent)

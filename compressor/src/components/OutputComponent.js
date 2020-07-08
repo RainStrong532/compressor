@@ -46,9 +46,13 @@ class OutputComponent extends React.Component{
         })
         let button = null;
         if(this.props.isCompressed){
-            button = <button onClick = {() => {
-                this.downloadData(DOMAIN + "blob.jpeg")
+            button =
+            <>
+            <p className="mt-2">Click on the image to see more!</p>
+            <button onClick = {() => {
+                this.downloadData(DOMAIN + output.name)
             }} className="btn btn-warning mt-2 d-block" title="Download image" download>Download</button>
+            </>
         }
         console.log("AAAA:   ", this.props.isCompressed);
         
@@ -63,8 +67,8 @@ class OutputComponent extends React.Component{
                                     <button type="button" className="close" style={{display: 'none'}} aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
-                                    <a href={output ? DOMAIN + "blob.jpeg" : ""} title="Click to see more!" target="_blank" rel="noopener noreferrer">
-                                        <img className="mw-100 image" src={output ? DOMAIN + "blob.jpeg" : ""} alt=""/>
+                                    <a href={output ? DOMAIN + output.name : ""} title="Click to see more!" target="_blank" rel="noopener noreferrer">
+                                        <img className="mw-100 image" src={output ? DOMAIN + output.name : ""} alt=""/>
                                     </a>
                                     {button}
                                 </div>

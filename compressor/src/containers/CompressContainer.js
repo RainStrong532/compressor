@@ -35,14 +35,17 @@ class CompressContainer extends React.Component{
     handleFile = async(fl, parent) => {
         console.log("state: ", this.state);
         
-        let file = (parent.state.input === null) ?fl : parent.state.input;
+        let file = (fl) ?fl : parent.state.input;
         if (!file || !file.name.match(/.(jpg|jpeg|png)$/gi)) {
             alert('Bạn chưa chọn ảnh hoặc ảnh chưa đúng định dạng: jpg, jpeg, png!')
             return;
         }
 
+        // set properties
+        Compressor.setDefaults(parent.state);
+
         //upload input image
-        if(parent.state.input === null){
+        if(fl){
         let data = new FormData();
         data.append("avatar", file);
         await fetch(DOMAIN + "upload", {
@@ -59,27 +62,37 @@ class CompressContainer extends React.Component{
                 return (res);
             })
             .catch((error) => {
-               alert("error: ", error)
+               alert("Error: ", error)
                 return;
             })
         }
         //upload output image
 
         await new Compressor(file, {
-            strict: this.state.strict,
-            checkOrientation: this.state.checkOrientation,
-            quality: this.state.quality,
-            maxWidth: this.state.maxWidth,
-            maxHeight: this.state.maxHeight,
-            minWidth: this.state.minWidth,
-            minHeight: this.state.minHeight,
-            width: this.state.width,
-            height: this.state.height,
-            convertSize: this.state.convertSize,
-            mimeType: this.state.mimeType,
+            // strict: this.state.strict,
+            // checkOrientation: this.state.checkOrientation,
+            // quality: this.state.quality,
+            // maxWidth: this.state.maxWidth,
+            // maxHeight: this.state.maxHeight,
+            // minWidth: this.state.minWidth,
+            // minHeight: this.state.minHeight,
+            // width: this.state.width,
+            // height: this.state.height,
+            // convertSize: this.state.convertSize,
+            // mimeType: this.state.mimeType,
             success(result) {
-              const formData = new FormData(); 
-              formData.append('avatar', result);
+              const formData = new FormData();
+
+              //convert output name file
+              let names, name;
+              names = result.name.split('.');
+              names[names.length-1] = 'jpeg';
+              name = names.join('.');
+              console.log(name);
+              
+              formData.append('avatar', result, "blob " + name);
+
+            // up load image compressed
             fetch(DOMAIN + 'upload', {
                 method: 'POST' , 
                 body: formData
@@ -91,16 +104,21 @@ class CompressContainer extends React.Component{
             .then((res) => {
                 console.log("output res", res);
                 parent.setState({isCompressed: true});
+
+                //set state ouput
+                let output = result;
+                output.name = "blob " + name;
                 parent.setState({output: result});   
                 return (res);
             })
             .catch((error) => {
-            console.log("output error: ", error)
-                return;
+            alert("Error: ", error)
+            return;
             })
             },
             error(err) {
-              console.log("outputerror: ",err.message);
+            alert("Error: ",err.message);
+            return;
             },
           });
         }
